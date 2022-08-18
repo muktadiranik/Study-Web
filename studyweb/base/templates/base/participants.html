@@ -1,0 +1,36 @@
+<div>
+  <h3 class="text-center">Participants</h3>
+
+  {% if participants %}
+  <div class="p-5">
+    {% for participant in participants %}
+
+    <div class="mt-2 mb-2">
+      <li>
+        <a href="{% url 'user-profile' participant.id %}">
+          {% if participant.image %}
+          <img
+            src="{{ participant.image.url }}"
+            height="50px"
+            width="50px"
+            class="rounded-circle"
+          />
+
+          {% else %}
+          <img
+            src="https://picsum.photos/200/300"
+            height="50px"
+            width="50px"
+            class="rounded-circle"
+          />
+          {% endif %}
+          <!--  -->
+          @{{ participant }}</a
+        >
+      </li>
+    </div>
+
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

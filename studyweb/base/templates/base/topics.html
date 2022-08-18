@@ -1,0 +1,17 @@
+<div>
+  <h4>Browse Topic</h4>
+  <table class="table table-borderless">
+    <tbody>
+      <tr>
+        <td><a href="{% url 'home' %}">All</a></td>
+        <td></td>
+      </tr>
+      {% for topic in topics %}
+      <tr>
+        <td><a href="{% url 'home' %}?q={{topic.title}}">{{ topic }}</a></td>
+        <td><span class="badge bg-secondary">{{ topic.room_count }}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

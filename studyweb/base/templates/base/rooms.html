@@ -1,0 +1,93 @@
+<div>
+  <!-- room section starts here -->
+  {% for room in rooms %}
+  <div class="card bg-dark mt-2 mb-2">
+    <div class="card-header">
+      <div class="d-flex">
+        <div class="d-block">
+          {% if room.image %}
+          <img
+            src="{{ room.image.url }}"
+            height="100px"
+            width="100px"
+            class="rounded"
+          />
+          {% else %}
+          <img
+            src="https://picsum.photos/200/300"
+            height="100px"
+            width="100px"
+            class="rounded"
+          />
+          {% endif %}
+        </div>
+        <div class="d-block m-4">
+          <span
+            ><a href="{% url 'user-profile' room.host_id %}" class="d-inline"
+              >@{{ room.host }}</a
+            ></span
+          >
+          <h4 id="room-title">
+            <a href="{% url 'room' room.id %}">{{ room.title }}</a>
+          </h4>
+        </div>
+      </div>
+
+      <small><span class="badge bg-success">{{ room.topic }}</span></small>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ room.description|safe }}</p>
+      {% if request.user.is_authenticated and request.user == room.host %}
+      <!--  -->
+
+      <a href="{% url 'update-room' room.id %}" class="btn btn-warning">
+        Update
+      </a>
+
+      <button
+        type="button"
+        class="btn btn-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        Delete
+      </button>
+
+      {% else %}
+      <!--  -->
+      {% endif %}
+    </div>
+  </div>
+  <!--  -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark">
+        <div class="modal-body">
+          <div>
+            <button
+              type="button"
+              class="btn btn-secondary btn-lg"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <a
+              href="{% url 'delete-room' room.id %}"
+              class="btn btn-danger btn-lg d-flex float-end"
+            >
+              Delete
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <!-- modal -->
+</div>

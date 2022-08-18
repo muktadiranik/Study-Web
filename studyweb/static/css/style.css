@@ -1,0 +1,32 @@
+body {
+  background-color: #2d2d2d;
+  color: azure;
+}
+
+a {
+  text-decoration: none;
+  color: cornflowerblue;
+}
+
+td > a {
+  text-align: center;
+  font-size: 1rem;
+  color: chocolate;
+}
+
+td > a:hover {
+  transition: 200ms;
+  color: whitesmoke;
+}
+
+#room-title > a {
+  color: azure;
+}
+
+#room-title > a:hover {
+  color: chocolate;
+}
+
+.hidden-messages {
+  visibility: hidden;
+}

@@ -1,0 +1,53 @@
+<div>
+  <h2>Activities</h2>
+  <div>
+    {% if comments %}
+    <div>
+      {% for comment in comments %}
+      <div class="card bg-dark mb-3 mt-3">
+        <div class="card-body">
+          <div class="card-title">
+            {% if comment.user.image %}
+            <small
+              ><img
+                src="{{ comment.user.image.url }}"
+                height="50px"
+                width="50px"
+                class="rounded-circle"
+              />
+              @<a href="{% url 'user-profile' comment.user_id %}"
+                >{{ comment.user }}</a
+              >
+              {{ comment.updated|timesince }} ago
+            </small>
+            {% else %}
+            <small
+              ><img
+                src="https://picsum.photos/200/300"
+                height="50px"
+                width="50px"
+                class="rounded-circle"
+              />
+              @<a href="{% url 'user-profile' comment.user_id %}"
+                >{{ comment.user }}</a
+              >
+              {{ comment.updated|timesince }} ago
+            </small>
+            {% endif %}
+          </div>
+          <p class="card-text">{{ comment|safe }}</p>
+          {% if comment.user == request.user %}
+          <a
+            href="{% url 'delete-comment' comment.id %}"
+            class="btn btn-danger btn-sm"
+          >
+            Delete
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>

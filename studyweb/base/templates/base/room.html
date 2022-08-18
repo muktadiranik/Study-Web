@@ -1,0 +1,99 @@
+{% extends 'main.html' %}
+<!--  -->
+{% block content %}
+<!--  -->
+{% if room %}
+<!--  -->
+
+<div>
+  <div class="row mt-3">
+    <div class="col-12 col-md-8 col-lg-9">
+      <div class="ms-5 mb-5">
+        <div class="d-flex">
+          <div class="d-block">
+            {% if room.image %}
+            <img
+              src="{{ room.image.url }}"
+              height="100px"
+              width="100px"
+              class="rounded"
+            />
+            {% else %}
+            <img
+              src="https://picsum.photos/200/300"
+              height="100px"
+              width="100px"
+              class="rounded"
+            />
+            {% endif %}
+          </div>
+          <div class="d-block m-4">
+            <span
+              ><a href="{% url 'user-profile' room.host_id %}" class="d-inline"
+                >@{{ room.host }}</a
+              ></span
+            >
+            <h4 id="room-title">
+              <a href="{% url 'room' room.id %}">{{ room.title }}</a>
+            </h4>
+          </div>
+        </div>
+        <div>
+          <p>{{ room.description|safe }}</p>
+        </div>
+      </div>
+
+      {% if comments %}
+      <div>
+        {% for comment in comments %}
+        <div class="card bg-dark mt-3 mb-3">
+          <div class="card-header">
+            <small>
+              <a href="{% url 'user-profile' comment.user_id %}">
+                @{{ comment.user }}
+              </a>
+              {{ comment.updated|timesince }} ago
+            </small>
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{ comment|safe }}</p>
+
+            {% if request.user == comment.user %}
+            <!--  -->
+            <div>
+              <br />
+              <a
+                href="{% url 'delete-comment' comment.id %}"
+                class="btn btn-danger"
+              >
+                <i class="fa-solid fa-trash"></i>
+              </a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="mt-3 ms-5">
+        <form method="post">
+          {% csrf_token %}
+          <!--  -->
+          {{ form.media }}
+          <!--  -->
+          {{ form.as_p }}
+          <!--  -->
+          <button type="submit" class="btn btn-primary">Comment</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-3">
+      {% include "base/participants.html" %}
+    </div>
+  </div>
+</div>
+
+<!--  -->
+{% endif %}
+<!--  -->
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'main.html' %}
+<!--  -->
+{% load crispy_forms_tags %}
+<!--  -->
+{% block content %}
+<!--  -->
+
+<div class="row container-fluid mt-2">
+  <div class="col-12 col-md-6 col-lg-6 p-4">
+    <div class="container">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!--  -->
+        {{ form.media }}
+        <!--  -->
+        {{ form|crispy }}
+        <!--  -->
+        <div class="text-center mt-2">
+          {% if update_flag %}
+          <button type="submit" class="btn btn-warning btn-lg">Update</button>
+          {% else %}
+          <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 col-lg-6 p-4">
+    <div class="card bg-dark">
+      <div class="card-header text-center">
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+        <h5>@{{ user }}</h5>
+        {% if user.image %}
+        <img
+          class="rounded-circle"
+          src="{{ user.image.url }}"
+          height="500px"
+          width="500px"
+        />
+        {% else %}
+        <i class="fa-solid fa-image-portrait"></i>
+        {% endif %}
+        <p><i>{{ user.email }}</i></p>
+      </div>
+
+      <div class="card-body">
+        <p class="card-text"></p>
+        <p>{{ user.bio|safe }}</p>
+
+        <div>
+          {% for skill in user.skills.all %}
+          <span class="badge bg-info">{{ skill }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  -->
+{% endblock %}
